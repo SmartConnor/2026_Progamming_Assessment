@@ -110,6 +110,7 @@ while ing != "xxx":
     if ing == "xxx":
         break
 
+    # Making it skip the unit if the ingredient is eggs
     if ing == "egg" or ing == "eggs":
 
         # The amount of the ingredient
@@ -123,3 +124,11 @@ while ing != "xxx":
 
         # The unit of the amount (kg, g, l, ml)
         unit = unit_checker("Unit: ")
+
+
+
+
+
+
+
+
