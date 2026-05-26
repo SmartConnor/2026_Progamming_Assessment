@@ -1,3 +1,4 @@
+# Function goes here
 def make_statement(statement, decoration):
     """Makes the heading stand out with decorations"""
 
@@ -76,9 +77,11 @@ def unit_checker(question):
             print("Please enter a valid unit (kg, g, ml or l)")
 
 
+# Tittle of the calculator
 print(make_statement("Welcome to Recipe Calculator", "📃"))
 print()
 
+# Asking users instruction
 want_instructions = yes_no_checker("Do you want to see the instruction?")
 print()
 
@@ -88,11 +91,12 @@ print()
 
 # Main routine
 
-# Getting Recipe name, and ingredient
+# Getting Recipe name
 recipe_name = not_blank("Recipe Name: ")
 print(f"Recipe Name is {recipe_name}")
 print()
 
+# Getting the serving size
 serving_size = num_check("serving size: ")
 print(f"Serving Size is {serving_size}")
 print()
@@ -114,16 +118,49 @@ while ing != "xxx":
     if ing == "egg" or ing == "eggs":
 
         # The amount of the ingredient
-        amount = num_check("Amount: ")
+        amount = num_check("Recipe Amount: ")
         print()
 
     else:
         # The amount of the ingredient
-        amount = num_check("Amount: ")
+        amount = num_check("Recipe Amount: ")
         print()
 
         # The unit of the amount (kg, g, l, ml)
         unit = unit_checker("Unit: ")
+        print()
+
+    # Getting the price
+    price = num_check("Price($): ")
+    print()
+
+    # Making it skip the unit if the ingredient is eggs
+    if ing == "egg" or ing == "eggs":
+
+        # Getting the Amount
+        Amount = num_check("Amount Bought: ")
+        print()
+
+    else:
+
+        # Getting the Amount
+        Amount = num_check("Amount Bought: ")
+        print()
+
+        # Getting the Unit
+        Unit = unit_checker("Unit: ")
+        print()
+
+    # Making the recipe unit the same as the unit bought
+
+
+    # Calculating the Cost to make
+    Cost_to_make = price / Amount * amount
+    print(f"Cost To Make: ${Cost_to_make} ")
+
+
+
+
 
 
 
