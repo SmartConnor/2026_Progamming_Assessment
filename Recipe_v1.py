@@ -62,19 +62,27 @@ def not_blank(question):
 
 
 def unit_checker(question):
-    """Makes sure that the user enters "yes / y" or "no / n" """
+    """Checks that the users input valid answers"""
 
     while True:
+
         unit = input(question).lower()
 
-        if unit == "g" or unit == "kg" or unit == "l" or unit == "ml":
-            return "yes"
-        elif unit == "gram" or unit == "grams" or unit == "kilogram" or unit == "kilograms":
-            return "yes"
-        elif unit == "Liter" or unit == "milliliters" or unit == "milliliter" or unit == "liter":
-            return "yes"
+        # returning the unit
+        if unit in ["kg", "kgs", "kilograms"]:
+            return "kg"
+
+        elif unit in ["g", "grams"]:
+            return "g"
+
+        elif unit in ["ml", "mls", "milliliters"]:
+            return "ml"
+
+        elif unit in ["l", "liters"]:
+            return "l"
+
         else:
-            print("Please enter a valid unit (kg, g, ml or l)")
+            print("Please enter a valid unit. (kg, g, ml or l)")
 
 
 # Tittle of the calculator
@@ -118,16 +126,16 @@ while ing != "xxx":
     if ing == "egg" or ing == "eggs":
 
         # The amount of the ingredient
-        amount = num_check("Recipe Amount: ")
+        recipe_amount = num_check("Recipe Amount: ")
         print()
 
     else:
         # The amount of the ingredient
-        amount = num_check("Recipe Amount: ")
+        recipe_amount = num_check("Recipe Amount: ")
         print()
 
         # The unit of the amount (kg, g, l, ml)
-        unit = unit_checker("Unit: ")
+        recipe_unit = unit_checker("Unit: ")
         print()
 
     # Getting the price
@@ -138,27 +146,39 @@ while ing != "xxx":
     if ing == "egg" or ing == "eggs":
 
         # Getting the Amount
-        Amount = num_check("Amount Bought: ")
+        bought_amount = num_check("Amount Bought: ")
         print()
 
     else:
 
         # Getting the Amount
-        Amount = num_check("Amount Bought: ")
+        bought_amount = num_check("Amount Bought: ")
         print()
 
         # Getting the Unit
-        Unit = unit_checker("Unit: ")
+        bought_unit = unit_checker("Unit: ")
         print()
 
-    # Making the recipe unit the same as the unit bought
+    # Making the grams and milliliters the default
+    # Converting the units to a default
+    recipe_unit = ''
+    bought_unit = ''
 
+    if recipe_unit == "kg":
+        recipe_amount = recipe_amount * 1000
+
+    if recipe_unit == "ml":
+        recipe_amount = recipe_amount * 1000
+
+    if bought_unit == "kg":
+        bought_amount = bought_amount * 1000
+
+    if bought_unit == "ml":
+        bought_amount = bought_amount * 1000
 
     # Calculating the Cost to make
-    Cost_to_make = price / Amount * amount
+    Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
-
-
 
 
 
