@@ -1,17 +1,24 @@
-# Function
+# Function goes here
 def unit_checker(question):
-    """Makes sure that the user enters "yes / y" or "no / n" """
+    """Checks that the users input valid answers"""
 
     while True:
+
         unit = input(question).lower()
 
-        if unit == "g" or unit == "kg" or unit == "l" or unit == "ml":
-            return "yes"
-        elif unit == "gram" or unit == "grams" or unit == "kilogram" or unit == "kilograms":
-            return "yes"
-        elif unit == "Liter" or unit == "milliliters" or unit == "milliliter" or unit == "liter":
-            return "yes"
-        else:
-            print("Please enter a valid unit (kg, g, ml or l)")
+        # returning the unit
+        if unit in ["kg", "kgs", "kilograms"]:
+            return "kg"
 
-unit = unit_checker("Unit: ")
+        elif unit in ["g", "grams"]:
+            return "g"
+
+        elif unit in ["ml", "mls", "milliliters"]:
+            return "ml"
+
+        elif unit in ["l", "liters"]:
+            return "l"
+
+        else:
+            print("Please enter a valid unit. (kg, g, ml or l)")
+
