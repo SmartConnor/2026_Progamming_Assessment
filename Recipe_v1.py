@@ -1,3 +1,5 @@
+
+
 # Function goes here
 def make_statement(statement, decoration):
     """Makes the heading stand out with decorations"""
@@ -101,13 +103,14 @@ print()
 
 # Getting Recipe name
 recipe_name = not_blank("Recipe Name: ")
-print(f"Recipe Name is {recipe_name}")
 print()
 
 # Getting the serving size
 serving_size = num_check("serving size: ")
-print(f"Serving Size is {serving_size}")
 print()
+all_ing = []
+all_amount = []
+all_unit = []
 
 ing = ""
 # This is where looping starts
@@ -116,6 +119,9 @@ while ing != "xxx":
     print()
     # The ingredients
     ing = not_blank("Ingredient: ")
+    for item in ing:
+        if item.isdigit():
+            print("We have a number")
     print()
 
     # Breaking the loop
@@ -161,25 +167,27 @@ while ing != "xxx":
 
     # Making the grams and milliliters the default
     # Converting the units to a default
-    recipe_unit = ''
-    bought_unit = ''
 
     if recipe_unit == "kg":
         recipe_amount = recipe_amount * 1000
 
-    if recipe_unit == "ml":
+    if recipe_unit == "l":
         recipe_amount = recipe_amount * 1000
 
     if bought_unit == "kg":
         bought_amount = bought_amount * 1000
 
-    if bought_unit == "ml":
+    if bought_unit == "l":
         bought_amount = bought_amount * 1000
+
 
     # Calculating the Cost to make
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
 
+    all_ing.append(ing)
+    all_amount.append(bought_amount)
+    all_unit.append(bought_unit)
 
 
 

@@ -1,4 +1,8 @@
-txt = "11"
+# Function goes here
+"""Checks to see if there is any integer in a word answer"""
+
+# Type text here
+txt = ""
 
 for item in txt:
     if item.isdigit():
