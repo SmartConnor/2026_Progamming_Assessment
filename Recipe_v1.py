@@ -1,4 +1,4 @@
-
+import pandas
 
 # Function goes here
 def make_statement(statement, decoration):
@@ -87,6 +87,25 @@ def unit_checker(question):
             print("Please enter a valid unit. (kg, g, ml or l)")
 
 
+def ingredient_checker(question):
+    """Checks that the users doesn't have a blank answer"""
+    while True:
+
+        response = input(question)
+
+        if response == "":
+            print("Sorry, this cannot be blank. Please try again")
+            continue
+
+        for item in response:
+            if item.isdigit():
+                print("Sorry, this cannot have a number. Please try again")
+                break
+
+        else:
+            return response
+
+
 # Tittle of the calculator
 print(make_statement("Welcome to Recipe Calculator", "📃"))
 print()
@@ -111,6 +130,8 @@ print()
 all_ing = []
 all_amount = []
 all_unit = []
+all_recipe = []
+all_recipe_unit = []
 
 ing = ""
 # This is where looping starts
@@ -118,10 +139,7 @@ while ing != "xxx":
 
     print()
     # The ingredients
-    ing = not_blank("Ingredient: ")
-    for item in ing:
-        if item.isdigit():
-            print("We have a number")
+    ing = ingredient_checker("Ingredient: ")
     print()
 
     # Breaking the loop
@@ -185,9 +203,29 @@ while ing != "xxx":
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
 
-    all_ing.append(ing)
-    all_amount.append(bought_amount)
-    all_unit.append(bought_unit)
+recipe_heading = {
+    'Ingredient': all_ing,
+    'Amount': all_amount,
+    'Unit': all_unit,
+    'Recipe amount': all_recipe,
+    'Recipe unit': all_recipe_unit
+}
+# list to hold recipe details
+
+all_ing.append(ing)
+all_amount.append(bought_amount)
+all_unit.append(bought_unit)
+all_recipe.append(recipe_amount)
+all_recipe_unit.append(recipe_unit)
+
+# Creating dataframe
+recipe_data = pandas.DataFrame(recipe_heading)
+
+
+# printing the data frame
+print("Recipe Data")
+print(recipe_data)
+
 
 
 
