@@ -133,18 +133,19 @@ all_unit = []
 all_recipe = []
 all_recipe_unit = []
 
-ing = ""
+
+looping = ""
 # This is where looping starts
-while ing != "xxx":
+while looping != "no":
+
+    if looping == "no":
+        break
+    print()
 
     print()
     # The ingredients
     ing = ingredient_checker("Ingredient: ")
     print()
-
-    # Breaking the loop
-    if ing == "xxx":
-        break
 
     # Making it skip the unit if the ingredient is eggs
     if ing == "egg" or ing == "eggs":
@@ -198,10 +199,11 @@ while ing != "xxx":
     if bought_unit == "l":
         bought_amount = bought_amount * 1000
 
-
     # Calculating the Cost to make
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
+
+    looping = yes_no_checker("Do you want to continue?")
 
 recipe_heading = {
     'Ingredient': all_ing,
@@ -220,7 +222,6 @@ all_recipe_unit.append(recipe_unit)
 
 # Creating dataframe
 recipe_data = pandas.DataFrame(recipe_heading)
-
 
 # printing the data frame
 print("Recipe Data")
