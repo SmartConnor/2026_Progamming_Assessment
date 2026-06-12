@@ -4,13 +4,14 @@ def ingredient_checker(question):
 
         response = input(question)
 
-        if response != "":
+        if response == "":
+            print("Sorry, this cannot be blank. Please try again")
             continue
-        print("Sorry, this cannot be blank. Please try again")
 
         for item in response:
             if item.isdigit():
                 print("Sorry, this cannot have a number. Please try again")
+                break
 
         else:
             return response

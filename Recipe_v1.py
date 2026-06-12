@@ -48,7 +48,13 @@ This is the instruction
 
 This is a recipe calculator, you will first need to give the recipe name,
 then you will give the ingredients and the amount of that ingredient. After getting the ingredients,
-you can choose the unit of it (mL, L, g, kg).''')
+you can choose the unit of it (mL, L, g, kg).
+
+After getting details about the recipe you will then need to give the details of
+the ingredients that you have bought. 
+
+This calculator will then calculate how much you actually need to make the dish according to the
+difference between the recipe details and your bought ingredients.''')
 
 
 def not_blank(question):
@@ -111,7 +117,7 @@ print(make_statement("Welcome to Recipe Calculator", "📃"))
 print()
 
 # Asking users instruction
-want_instructions = yes_no_checker("Do you want to see the instruction?")
+want_instructions = yes_no_checker("Do you want to see the instruction? ")
 print()
 
 if want_instructions == "yes":
@@ -129,7 +135,7 @@ serving_size = num_check("serving size: ")
 print()
 all_ing = []
 all_amount = []
-all_unit = []
+all_bought_unit = []
 all_recipe = []
 all_recipe_unit = []
 
@@ -184,9 +190,12 @@ while looping != "no":
         bought_unit = unit_checker("Unit: ")
         print()
 
+    # Naming it different to put in panda dataframe
+    Bought = bought_amount
+    Recipe = recipe_amount
+
     # Making the grams and milliliters the default
     # Converting the units to a default
-
     if recipe_unit == "kg":
         recipe_amount = recipe_amount * 1000
 
@@ -199,33 +208,47 @@ while looping != "no":
     if bought_unit == "l":
         bought_amount = bought_amount * 1000
 
+    # list to hold recipe details
+    if ing == "egg" or ing == "eggs":
+        all_ing.append(ing)
+        all_amount.append(Bought)
+        all_recipe.append(Recipe)
+    else:
+        # list to hold recipe details
+        all_ing.append(ing)
+        all_amount.append(Bought)
+        all_bought_unit.append(bought_unit)
+        all_recipe.append(Recipe)
+        all_recipe_unit.append(recipe_unit)
+
+
     # Calculating the Cost to make
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
 
-    looping = yes_no_checker("Do you want to continue?")
+    looping = yes_no_checker("Do you want to continue? ")
+
+
 
 recipe_heading = {
     'Ingredient': all_ing,
-    'Amount': all_amount,
-    'Unit': all_unit,
-    'Recipe amount': all_recipe,
-    'Recipe unit': all_recipe_unit
+    'Bought(A)': all_amount,
+    'Bought(U)': all_bought_unit,
+    'Recipe(A)': all_recipe,
+    'Recipe(U)': all_recipe_unit,
 }
-# list to hold recipe details
-
-all_ing.append(ing)
-all_amount.append(bought_amount)
-all_unit.append(bought_unit)
-all_recipe.append(recipe_amount)
-all_recipe_unit.append(recipe_unit)
 
 # Creating dataframe
 recipe_data = pandas.DataFrame(recipe_heading)
 
+# Calculating the Total cost
+
+# Calculating per serve
+
 # printing the data frame
 print("Recipe Data")
 print(recipe_data)
+
 
 
 
