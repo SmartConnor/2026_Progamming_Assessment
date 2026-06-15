@@ -138,6 +138,8 @@ all_amount = []
 all_bought_unit = []
 all_recipe = []
 all_recipe_unit = []
+all_price = []
+all_cost = []
 
 
 looping = ""
@@ -169,15 +171,15 @@ while looping != "no":
         recipe_unit = unit_checker("Unit: ")
         print()
 
-    # Getting the price
-    price = num_check("Price($): ")
-    print()
-
     # Making it skip the unit if the ingredient is eggs
     if ing == "egg" or ing == "eggs":
 
         # Getting the Amount
         bought_amount = num_check("Amount Bought: ")
+        print()
+
+        # Getting the price
+        price = num_check("Price($): ")
         print()
 
     else:
@@ -188,6 +190,10 @@ while looping != "no":
 
         # Getting the Unit
         bought_unit = unit_checker("Unit: ")
+        print()
+
+        # Getting the price
+        price = num_check("Price($): ")
         print()
 
     # Naming it different to put in panda dataframe
@@ -208,11 +214,16 @@ while looping != "no":
     if bought_unit == "l":
         bought_amount = bought_amount * 1000
 
+    # Calculating the Cost to make
+    Cost_to_make = price / bought_amount * recipe_amount
+    print(f"Cost To Make: ${Cost_to_make} ")
+
     # list to hold recipe details
     if ing == "egg" or ing == "eggs":
         all_ing.append(ing)
         all_amount.append(Bought)
         all_recipe.append(Recipe)
+        all_price.append(price)
     else:
         # list to hold recipe details
         all_ing.append(ing)
@@ -220,11 +231,8 @@ while looping != "no":
         all_bought_unit.append(bought_unit)
         all_recipe.append(Recipe)
         all_recipe_unit.append(recipe_unit)
-
-
-    # Calculating the Cost to make
-    Cost_to_make = price / bought_amount * recipe_amount
-    print(f"Cost To Make: ${Cost_to_make} ")
+        all_price.append(price)
+        all_cost.append(Cost_to_make)
 
     looping = yes_no_checker("Do you want to continue? ")
 
@@ -236,6 +244,8 @@ recipe_heading = {
     'Bought(U)': all_bought_unit,
     'Recipe(A)': all_recipe,
     'Recipe(U)': all_recipe_unit,
+    'Price($)': all_price,
+    'Cost to make($)': all_cost,
 }
 
 # Creating dataframe
