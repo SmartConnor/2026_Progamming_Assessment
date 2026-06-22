@@ -133,6 +133,7 @@ print()
 # Getting the serving size
 serving_size = num_check("serving size: ")
 print()
+
 all_ing = []
 all_amount = []
 all_bought_unit = []
@@ -140,7 +141,7 @@ all_recipe = []
 all_recipe_unit = []
 all_price = []
 all_cost = []
-
+Count = ""
 
 looping = ""
 # This is where looping starts
@@ -155,75 +156,78 @@ while looping != "no":
     ing = ingredient_checker("Ingredient: ")
     print()
 
-    # Making it skip the unit if the ingredient is eggs
+    # Making it only ask these questions if the ingredient is eggs
     if ing == "egg" or ing == "eggs":
 
-        # The amount of the ingredient
+        # Getting the amount the recipe needs
         recipe_amount = num_check("Recipe Amount: ")
         print()
 
+        # Getting the amount that was bought
+        bought_amount = num_check("Bought Amount: ")
+        print()
+
+        # Getting the price
+        price = num_check("Price: ")
+        print()
+
+        # Giving the units no value if the ingredient is eggs
+        recipe_unit = Count
+        bought_unit = Count
+
+        # Naming it different to put in panda dataframe
+        Bought = bought_amount
+        Recipe = recipe_amount
+
     else:
-        # The amount of the ingredient
         recipe_amount = num_check("Recipe Amount: ")
         print()
 
-        # The unit of the amount (kg, g, l, ml)
-        recipe_unit = unit_checker("Unit: ")
+        recipe_unit = unit_checker("Recipe Unit: ")
         print()
 
-    # Making it skip the unit if the ingredient is eggs
-    if ing == "egg" or ing == "eggs":
-
-        # Getting the Amount
-        bought_amount = num_check("Amount Bought: ")
+        bought_amount = num_check("Bought Amount: ")
         print()
 
-        # Getting the price
+        bought_unit = unit_checker("Bought Unit: ")
+        print()
+
         price = num_check("Price($): ")
         print()
 
-    else:
+        # Naming it different to put in panda dataframe
+        Bought = bought_amount
+        Recipe = recipe_amount
 
-        # Getting the Amount
-        bought_amount = num_check("Amount Bought: ")
-        print()
+        # Making the grams and milliliters the default
+        # Converting the units to a default
+        if recipe_unit == "kg":
+            recipe_amount = recipe_amount * 1000
 
-        # Getting the Unit
-        bought_unit = unit_checker("Unit: ")
-        print()
+        if recipe_unit == "l":
+            recipe_amount = recipe_amount * 1000
 
-        # Getting the price
-        price = num_check("Price($): ")
-        print()
+        if bought_unit == "kg":
+            bought_amount = bought_amount * 1000
 
-    # Naming it different to put in panda dataframe
-    Bought = bought_amount
-    Recipe = recipe_amount
-
-    # Making the grams and milliliters the default
-    # Converting the units to a default
-    if recipe_unit == "kg":
-        recipe_amount = recipe_amount * 1000
-
-    if recipe_unit == "l":
-        recipe_amount = recipe_amount * 1000
-
-    if bought_unit == "kg":
-        bought_amount = bought_amount * 1000
-
-    if bought_unit == "l":
-        bought_amount = bought_amount * 1000
+        if bought_unit == "l":
+            bought_amount = bought_amount * 1000
 
     # Calculating the Cost to make
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
 
-    # list to hold recipe details
+
     if ing == "egg" or ing == "eggs":
+        # list to hold recipe details
         all_ing.append(ing)
         all_amount.append(Bought)
         all_recipe.append(Recipe)
         all_price.append(price)
+        all_cost.append(Cost_to_make)
+        all_bought_unit.append("-")
+        all_recipe_unit.append("-")
+
     else:
         # list to hold recipe details
         all_ing.append(ing)
@@ -235,11 +239,11 @@ while looping != "no":
         all_cost.append(Cost_to_make)
 
     looping = yes_no_checker("Do you want to continue? ")
+    print()
 
-
-
+# Recipe headings
 recipe_heading = {
-    'Ingredient': all_ing,
+    'Ing': all_ing,
     'Bought(A)': all_amount,
     'Bought(U)': all_bought_unit,
     'Recipe(A)': all_recipe,
@@ -250,22 +254,19 @@ recipe_heading = {
 
 # Creating dataframe
 recipe_data = pandas.DataFrame(recipe_heading)
-
 # Calculating the Total cost
-
+total_cost = recipe_data['Cost to make($)'].sum()
 # Calculating per serve
+per_serve = total_cost / serving_size
 
 # printing the data frame
-print("Recipe Data")
+print(make_statement("Recipe Data", "📊"))
 print(recipe_data)
-
-
-
-
-
-
-
-
-
+print()
+print("Total Cost")
+print(f"${total_cost}")
+print()
+print("Per Serve")
+print(f"${per_serve}")
 
 
