@@ -63,6 +63,7 @@ def not_blank(question):
 
         response = input(question)
 
+        # Checking if users put blank
         if response != "":
             return response
 
@@ -76,7 +77,7 @@ def unit_checker(question):
 
         unit = input(question).lower()
 
-        # returning the unit
+        # returning the unit as the unit instead of yes
         if unit in ["kg", "kgs", "kilograms"]:
             return "kg"
 
@@ -94,15 +95,17 @@ def unit_checker(question):
 
 
 def ingredient_checker(question):
-    """Checks that the users doesn't have a blank answer"""
+    """Checks that the users doesn't have a blank answer or a number answer"""
     while True:
 
         response = input(question)
 
+        # Checking that it can't be blank
         if response == "":
             print("Sorry, this cannot be blank. Please try again")
             continue
 
+        # Checking that users don't put numbers
         for item in response:
             if item.isdigit():
                 print("Sorry, this cannot have a number. Please try again")
@@ -217,7 +220,7 @@ while looping != "no":
     Cost_to_make = price / bought_amount * recipe_amount
     print(f"Cost To Make: ${Cost_to_make} ")
 
-
+    # To make it append "-" instead of units when ingredient is egg
     if ing == "egg" or ing == "eggs":
         # list to hold recipe details
         all_ing.append(ing)
