@@ -48,7 +48,7 @@ This is the instruction
 
 This is a recipe calculator, you will first need to give the recipe name,
 then you will give the ingredients and the amount of that ingredient. After getting the ingredients,
-you can choose the unit of it (mL, L, g, kg).
+you can choose the unit of it (mL, L, g, kg) or press enter if it is an ingredient that doesn't need units.
 
 After getting details about the recipe you will then need to give the details of
 the ingredients that you have bought. 
@@ -90,6 +90,9 @@ def unit_checker(question):
         elif unit in ["l", "liters"]:
             return "l"
 
+        elif unit == "":
+            return "-"
+
         else:
             print("Please enter a valid unit. (kg, g, ml or l)")
 
@@ -119,7 +122,7 @@ def ingredient_checker(question):
 print(make_statement("Welcome to Recipe Calculator", "📃"))
 print()
 
-# Asking users instruction
+# Asking users if they want instruction
 want_instructions = yes_no_checker("Do you want to see the instruction? ")
 print()
 
@@ -137,6 +140,7 @@ print()
 serving_size = num_check("serving size: ")
 print()
 
+# List for recipe details
 all_ing = []
 all_amount = []
 all_bought_unit = []
@@ -144,7 +148,6 @@ all_recipe = []
 all_recipe_unit = []
 all_price = []
 all_cost = []
-Count = ""
 
 looping = ""
 # This is where looping starts
@@ -152,80 +155,62 @@ while looping != "no":
 
     if looping == "no":
         break
-    print()
 
     print()
-    # The ingredients
+    # Asking for ingredient name
     ing = ingredient_checker("Ingredient: ")
     print()
 
-    # Making it only ask these questions if the ingredient is eggs
-    if ing == "egg" or ing == "eggs":
+    # Getting the amount the recipe needs
+    recipe_amount = num_check("Recipe Amount: ")
+    print()
 
-        # Getting the amount the recipe needs
-        recipe_amount = num_check("Recipe Amount: ")
-        print()
+    # Getting the recipe unit
+    recipe_unit = unit_checker("Recipe Unit <enter> for no unit: ")
+    print()
 
-        # Getting the amount that was bought
-        bought_amount = num_check("Bought Amount: ")
-        print()
+    # Getting the amount bought
+    bought_amount = num_check("Bought Amount: ")
+    print()
 
-        # Getting the price
-        price = num_check("Price: ")
-        print()
+    # Getting the unit bought
+    bought_unit = unit_checker("Bought Unit <enter> for no unit: ")
+    print()
 
-        # Giving the units no value if the ingredient is eggs
-        recipe_unit = Count
-        bought_unit = Count
+    # Getting the price
+    price = num_check("Price($): ")
+    print()
 
-        # Naming it different to put in panda dataframe
-        Bought = bought_amount
-        Recipe = recipe_amount
+    # Naming it different to put in panda dataframe
+    bought_details = bought_amount
+    recipe_details = recipe_amount
 
-    else:
-        recipe_amount = num_check("Recipe Amount: ")
-        print()
+    # Making the grams and milliliters the default
+    # Converting the units to a default
+    if recipe_unit == "kg":
+        recipe_amount = recipe_amount * 1000
 
-        recipe_unit = unit_checker("Recipe Unit: ")
-        print()
+    if recipe_unit == "l":
+        recipe_amount = recipe_amount * 1000
 
-        bought_amount = num_check("Bought Amount: ")
-        print()
+    if bought_unit == "kg":
+        bought_amount = bought_amount * 1000
 
-        bought_unit = unit_checker("Bought Unit: ")
-        print()
-
-        price = num_check("Price($): ")
-        print()
-
-        # Naming it different to put in panda dataframe
-        Bought = bought_amount
-        Recipe = recipe_amount
-
-        # Making the grams and milliliters the default
-        # Converting the units to a default
-        if recipe_unit == "kg":
-            recipe_amount = recipe_amount * 1000
-
-        if recipe_unit == "l":
-            recipe_amount = recipe_amount * 1000
-
-        if bought_unit == "kg":
-            bought_amount = bought_amount * 1000
-
-        if bought_unit == "l":
-            bought_amount = bought_amount * 1000
+    if bought_unit == "l":
+        bought_amount = bought_amount * 1000
 
     # Calculating the Cost to make
     Cost_to_make = price / bought_amount * recipe_amount
-    print(f"Cost To Make: ${Cost_to_make} ")
+    print(f"Cost To Make: ${Cost_to_make:.2f} ")
 
-    # To make it append "-" instead of units when ingredient is egg
-    if ing == "egg" or ing == "eggs":
+
+    # Appending the recipe details but make it append
+    # "-" if the ingredient doesn't need unit
+    if ing == "":
         # list to hold recipe details
         all_ing.append(ing)
-        all_amount.append(Bought)
-        all_recipe.append(Recipe)
+        all_amount.append(bought_details)
+        all_recipe.append(recipe_details)
         all_price.append(price)
         all_cost.append(Cost_to_make)
         all_bought_unit.append("-")
@@ -234,9 +219,9 @@ while looping != "no":
     else:
         # list to hold recipe details
         all_ing.append(ing)
-        all_amount.append(Bought)
+        all_amount.append(bought_details)
         all_bought_unit.append(bought_unit)
-        all_recipe.append(Recipe)
+        all_recipe.append(recipe_details)
         all_recipe_unit.append(recipe_unit)
         all_price.append(price)
         all_cost.append(Cost_to_make)
@@ -267,9 +252,9 @@ print(make_statement("Recipe Data", "📊"))
 print(recipe_data)
 print()
 print("Total Cost")
-print(f"${total_cost}")
+print(f"${total_cost:.2f}")
 print()
 print("Per Serve")
-print(f"${per_serve}")
+print(f"${per_serve:.2f}")
 
 
